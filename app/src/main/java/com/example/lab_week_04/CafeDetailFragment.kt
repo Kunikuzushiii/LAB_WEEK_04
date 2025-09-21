@@ -11,37 +11,43 @@ import androidx.annotation.StringRes
 class CafeDetailFragment : Fragment() {
 
     private var cafeTitleResId: Int = 0
+    private var cafeDescResId: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
             cafeTitleResId = it.getInt(ARG_CAFE_TITLE_RES_ID)
+            cafeDescResId = it.getInt(ARG_CAFE_DESC_RES_ID)
         }
     }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         val view = inflater.inflate(R.layout.fragment_cafe_detail, container, false)
         val titleTextView = view.findViewById<TextView>(R.id.cafe_detail_title_textview)
-        if (cafeTitleResId != 0) {
-            titleTextView.text = getString(cafeTitleResId)
-        } else {
-            titleTextView.text = "Cafe Details"
-        }
+        val descTextView = view.findViewById<TextView>(R.id.content_description)
+
+        if (cafeTitleResId != 0) titleTextView.text = getString(cafeTitleResId)
+        if (cafeDescResId  != 0) descTextView.text  = getString(cafeDescResId)
+
         return view
     }
 
     companion object {
         private const val ARG_CAFE_TITLE_RES_ID = "cafe_title_res_id"
+        private const val ARG_CAFE_DESC_RES_ID  = "cafe_desc_res_id"
 
         @JvmStatic
-        fun newInstance(@StringRes cafeTitleResId: Int) =
-            CafeDetailFragment().apply {
-                arguments = Bundle().apply {
-                    putInt(ARG_CAFE_TITLE_RES_ID, cafeTitleResId)
-                }
+        fun newInstance(
+            @StringRes cafeTitleResId: Int,
+            @StringRes cafeDescResId: Int
+        ) = CafeDetailFragment().apply {
+            arguments = Bundle().apply {
+                putInt(ARG_CAFE_TITLE_RES_ID, cafeTitleResId)
+                putInt(ARG_CAFE_DESC_RES_ID, cafeDescResId)
             }
+        }
     }
 }
